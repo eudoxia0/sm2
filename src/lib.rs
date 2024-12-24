@@ -91,6 +91,7 @@ impl Item {
         }
     }
 
+    /// The interval when the item will be reviewed next.
     pub fn interval(&self) -> Interval {
         let r = self.repetitions;
         let ef = self.easiness;
