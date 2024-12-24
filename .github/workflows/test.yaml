@@ -23,6 +23,9 @@ jobs:
       - name: fetch deps
         run: cargo fetch
 
+      - name: install cargo-llvm-cov
+        uses: taiki-e/install-action@cargo-llvm-cov
+
       - name: build tests
         run: cargo test --no-run
 
