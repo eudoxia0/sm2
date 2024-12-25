@@ -38,16 +38,16 @@ fn test_repeat() {
 #[test]
 fn test_default() {
     let item = Item::default();
-    assert_eq!(item.repetitions(), 0);
-    assert_eq!(item.easiness(), sm2::INITIAL_EF);
+    assert_eq!(item.n(), 0);
+    assert_eq!(item.ef(), sm2::INITIAL_EF);
 }
 
 /// Item constructor and accessors work.
 #[test]
 fn test_constructor_and_accessors() {
     let item = Item::new(0, 3.0);
-    assert_eq!(item.repetitions(), 0);
-    assert_eq!(item.easiness(), 3.0);
+    assert_eq!(item.n(), 0);
+    assert_eq!(item.ef(), 3.0);
 }
 
 /// Test the `Item::interval` method.
@@ -78,7 +78,7 @@ fn test_forgetting() {
     for q in qs {
         let item = Item::new(3, 2.5);
         let item = item.review(q);
-        assert_eq!(item.repetitions(), 0);
+        assert_eq!(item.n(), 0);
     }
 }
 
@@ -102,7 +102,7 @@ fn test_min_ef() {
                         let qv = [q1, q2, q3, q4, q5];
                         for q in qv {
                             item = item.review(q);
-                            assert!(item.easiness() >= 1.3);
+                            assert!(item.ef() >= 1.3);
                         }
                     }
                 }
@@ -134,11 +134,11 @@ fn close_enough(a: f32, b: f32) -> bool {
 fn test_ef() {
     let item = Item::default();
     let item = item.review(Quality::Hard);
-    assert!(close_enough(item.easiness(), 2.36));
+    assert!(close_enough(item.ef(), 2.36));
     let item = item.review(Quality::Good);
-    assert!(close_enough(item.easiness(), 2.36));
+    assert!(close_enough(item.ef(), 2.36));
     let item = item.review(Quality::Perfect);
-    assert!(close_enough(item.easiness(), 2.46));
+    assert!(close_enough(item.ef(), 2.46));
     let item = item.review(Quality::Perfect);
-    assert!(close_enough(item.easiness(), 2.56));
+    assert!(close_enough(item.ef(), 2.56));
 }

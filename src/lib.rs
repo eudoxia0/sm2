@@ -73,17 +73,17 @@ pub struct Item {
 
 impl Item {
     /// Construct an item from a repetition count and an EF.
-    pub fn new(r: Repetitions, e: Ease) -> Self {
-        Self { n: r, ef: e }
+    pub fn new(n: Repetitions, ef: Ease) -> Self {
+        Self { n, ef }
     }
 
     /// The item's number of repetitions.
-    pub fn repetitions(&self) -> Repetitions {
+    pub fn n(&self) -> Repetitions {
         self.n
     }
 
     /// The item's easiness factor.
-    pub fn easiness(&self) -> Ease {
+    pub fn ef(&self) -> Ease {
         self.ef
     }
 
