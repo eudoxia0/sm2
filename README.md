@@ -11,3 +11,7 @@ An implementation of the [SM-2][sm2] algorithm from [SuperMemo][sm]. For my own 
 Plot of the change in EF as a function of response quality:
 
 ![](ef.png)
+
+Interval as a function of correct repetitions, for different EF values:
+
+![](interval.png)
