@@ -43,15 +43,22 @@ impl Quality {
     /// True for quality levels representing failure.
     pub fn forgot(self) -> bool {
         match self {
-            Self::Blackout | Self::Incorrect | Self::IncorrectEasy => true,
-            Self::Hard | Self::Good | Self::Perfect => false,
+            Self::Blackout
+            | Self::Incorrect
+            | Self::IncorrectEasy => true,
+            Self::Hard | Self::Good | Self::Perfect => {
+                false
+            }
         }
     }
 
     /// Should the item be repeated at the end of the session?
     pub fn repeat(self) -> bool {
         match self {
-            Self::Blackout | Self::Incorrect | Self::IncorrectEasy | Self::Hard => true,
+            Self::Blackout
+            | Self::Incorrect
+            | Self::IncorrectEasy
+            | Self::Hard => true,
             Self::Good | Self::Perfect => false,
         }
     }
@@ -86,7 +93,10 @@ impl Item {
     #[must_use = "Item::review returns a new Item"]
     pub fn review(self, q: Quality) -> Self {
         Self {
-            repetitions: next_repetitions(self.repetitions, q),
+            repetitions: next_repetitions(
+                self.repetitions,
+                q,
+            ),
             easiness: next_easiness(self.easiness, q),
         }
     }
@@ -119,7 +129,10 @@ impl Default for Item {
 }
 
 /// Update the repetitions after a review.
-fn next_repetitions(rep: Repetitions, q: Quality) -> Repetitions {
+fn next_repetitions(
+    rep: Repetitions,
+    q: Quality,
+) -> Repetitions {
     if q.forgot() {
         0
     } else {
