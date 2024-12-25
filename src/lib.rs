@@ -1,17 +1,17 @@
 /// The number of times in a row an item was recalled correctly.
 pub type Repetitions = u32;
 
-/// The Easiness Factor (EF) of an item.
-pub type Easiness = f32;
+/// The Ease Factor (EF) of an item.
+pub type Ease = f32;
 
 /// The initial EF of an item.
-pub const INITIAL_EF: Easiness = 2.5;
+pub const INITIAL_EF: Ease = 2.5;
 
 /// The minimum EF value.
-const MIN_EF: Easiness = 1.3;
+const MIN_EF: Ease = 1.3;
 
 /// If the given EF is below the minimum, return the minimum.
-fn min(ef: Easiness) -> Easiness {
+fn min(ef: Ease) -> Ease {
     if ef < MIN_EF {
         MIN_EF
     } else {
@@ -61,12 +61,12 @@ impl Quality {
 #[derive(Debug, Copy, Clone)]
 pub struct Item {
     repetitions: Repetitions,
-    easiness: Easiness,
+    easiness: Ease,
 }
 
 impl Item {
     /// Construct an item from a repetition count and an EF.
-    pub fn new(r: Repetitions, e: Easiness) -> Self {
+    pub fn new(r: Repetitions, e: Ease) -> Self {
         Self {
             repetitions: r,
             easiness: e,
@@ -79,7 +79,7 @@ impl Item {
     }
 
     /// The item's easiness factor.
-    pub fn easiness(&self) -> Easiness {
+    pub fn easiness(&self) -> Ease {
         self.easiness
     }
 
@@ -128,7 +128,7 @@ fn next_repetitions(rep: Repetitions, q: Quality) -> Repetitions {
 }
 
 /// Update EF after a review.
-fn next_easiness(ef: Easiness, q: Quality) -> Easiness {
+fn next_easiness(ef: Ease, q: Quality) -> Ease {
     let ef = min(ef);
     let q = (q as u8) as f32;
     let ef = ef - 0.8 + 0.28 * q - 0.02 * q * q;
