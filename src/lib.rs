@@ -67,45 +67,39 @@ impl Quality {
 /// An item of knowledge.
 #[derive(Debug, Copy, Clone)]
 pub struct Item {
-    repetitions: Repetitions,
-    easiness: Ease,
+    n: Repetitions,
+    ef: Ease,
 }
 
 impl Item {
     /// Construct an item from a repetition count and an EF.
     pub fn new(r: Repetitions, e: Ease) -> Self {
-        Self {
-            repetitions: r,
-            easiness: e,
-        }
+        Self { n: r, ef: e }
     }
 
     /// The item's number of repetitions.
     pub fn repetitions(&self) -> Repetitions {
-        self.repetitions
+        self.n
     }
 
     /// The item's easiness factor.
     pub fn easiness(&self) -> Ease {
-        self.easiness
+        self.ef
     }
 
     #[must_use = "Item::review returns a new Item"]
     pub fn review(self, q: Quality) -> Self {
         Self {
-            repetitions: next_repetitions(
-                self.repetitions,
-                q,
-            ),
-            easiness: next_easiness(self.easiness, q),
+            n: next_repetitions(self.n, q),
+            ef: next_easiness(self.ef, q),
         }
     }
 
     /// The interval when the item will be reviewed next.
     pub fn interval(&self) -> Interval {
-        let r = self.repetitions;
-        let ef = self.easiness;
-        match self.repetitions {
+        let r = self.n;
+        let ef = self.ef;
+        match self.n {
             0 => 0,
             1 => 1,
             2 => 6,
@@ -122,8 +116,8 @@ impl Item {
 impl Default for Item {
     fn default() -> Self {
         Self {
-            repetitions: 0,
-            easiness: INITIAL_EF,
+            n: 0,
+            ef: INITIAL_EF,
         }
     }
 }
