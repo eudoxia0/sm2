@@ -90,8 +90,8 @@ impl Item {
     #[must_use = "Item::review returns a new Item"]
     pub fn review(self, q: Quality) -> Self {
         Self {
-            n: next_repetitions(self.n, q),
-            ef: next_easiness(self.ef, q),
+            n: np(self.n, q),
+            ef: efp(self.ef, q),
         }
     }
 
@@ -123,10 +123,7 @@ impl Default for Item {
 }
 
 /// Update the repetitions after a review.
-fn next_repetitions(
-    rep: Repetitions,
-    q: Quality,
-) -> Repetitions {
+fn np(rep: Repetitions, q: Quality) -> Repetitions {
     if q.forgot() {
         0
     } else {
@@ -135,7 +132,7 @@ fn next_repetitions(
 }
 
 /// Update EF after a review.
-fn next_easiness(ef: Ease, q: Quality) -> Ease {
+fn efp(ef: Ease, q: Quality) -> Ease {
     let ef = min(ef);
     let q = (q as u8) as f32;
     let ef = ef - 0.8 + 0.28 * q - 0.02 * q * q;
