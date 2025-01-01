@@ -106,7 +106,7 @@ impl Item {
             _ => {
                 let r = r as f32;
                 let i = 6.0 * ef.powf(r - 2.0);
-                let i = i.ceil();
+                let i = i.round();
                 i as u32
             }
         }
